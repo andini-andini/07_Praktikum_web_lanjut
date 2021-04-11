@@ -48,7 +48,7 @@
 
             <td>{{ $Mahasiswa->Nim }}</td>
             <td>{{ $Mahasiswa->Nama }}</td>
-            <td>{{ $mahasiswa->kelas->nama_kelas }}</td>
+            <td>{{ $mahasiswa->Kelas->nama_kelas }}</td>
             <td>{{ $Mahasiswa->Jurusan }}</td>
             <td>{{ $Mahasiswa->Tgl_Lahir }}</td>
             <td>{{ $Mahasiswa->No_Handphone }}</td>

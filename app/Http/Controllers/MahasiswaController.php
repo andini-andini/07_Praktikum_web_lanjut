@@ -53,7 +53,7 @@ class MahasiswaController extends Controller
         ]);
 
         //fungsi eloquent untuk mengambil data kelas dari relation
-        $kelas = Kelas::find($request->get('kelas'));
+        $kelas = Kelas::find($request->get('Kelas'));
 
         //fungsi eloquent untuk menyimpan data mahasiswa
         $Mahasiswa = new Mahasiswa();
@@ -64,10 +64,10 @@ class MahasiswaController extends Controller
         $Mahasiswa->No_Handphone = $request->get('No_Handphone');
         $Mahasiswa->Email = $request->get('Email');
 
-        $kelas = new Kelas;
-        $kelas->id = $request->get('kelas');
+        $Kelas = new Kelas;
+        $Kelas->id = $request->get('Kelas');
 
-        $Mahasiswa->kelas()->associate($kelas); // FUngsi eloquent untuk menyimpan belongTo
+        $Mahasiswa->Kelas()->associate($Kelas); // FUngsi eloquent untuk menyimpan belongTo
         $Mahasiswa->save();
 
         //jika data berhasil ditambahkan, akan kembali ke halaman utama

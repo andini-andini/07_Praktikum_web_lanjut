@@ -151,8 +151,13 @@ class MahasiswaController extends Controller
      */
     public function destroy($Nim)
     {
+        $Mahasiswa = Mahasiswa::find($Nim);
+
+        //fungsi eloquent untuk menghapus data pada relasi mahasiswa_matakuliah
+        $Mahasiswa->matakuliah()->detach();
+
         //fungsi eloquent untuk menghapus data
-        Mahasiswa::find($Nim)->delete();
+        $Mahasiswa->delete();;
         return redirect()->route('mahasiswas.index')
             ->with('success', 'Mahasiswa Berhasil Dihapus');
     }
@@ -161,5 +166,11 @@ class MahasiswaController extends Controller
     {
         $mahasiswas = Mahasiswa::where('Nama', 'like', "%" . $request->keywords . "%")->paginate(5);
         return view('mahasiswas.search', compact('mahasiswas'));
+    }
+    public function nilai($Nim)
+    {
+        //menampilkan detail data nilai mahasiswa dengan menemukan/berdasarkan Nim Mahasiswa
+        $mahasiswas = Mahasiswa::with('Kelas', 'matakuliah')->find($Nim);
+        return view('mahasiswas.nilai', compact('mahasiswas'));
     }
 };

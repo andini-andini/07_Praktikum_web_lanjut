@@ -6,6 +6,7 @@ use App\Models\Kelas;
 use App\Models\Mahasiswa;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use PDF;
 
 class MahasiswaController extends Controller
 {
@@ -188,5 +189,12 @@ class MahasiswaController extends Controller
         //menampilkan detail data nilai mahasiswa dengan menemukan/berdasarkan Nim Mahasiswa
         $mahasiswas = Mahasiswa::with('Kelas', 'matakuliah')->find($Nim);
         return view('mahasiswas.nilai', compact('mahasiswas'));
+    }
+
+    public function cetak_pdf($Nim)
+    {
+        $mahasiswas = Mahasiswa::with('Kelas', 'matakuliah')->find($Nim);
+        $pdf = PDF::loadview('mahasiswas.mahasiswas_pdf', compact('mahasiswas'));
+        return $pdf->stream();
     }
 };

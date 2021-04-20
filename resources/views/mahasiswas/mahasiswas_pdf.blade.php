@@ -1,20 +1,19 @@
 @extends('mahasiswas.layout')
 @section('content')
-    <div class="row my-3">
-        <div class="col">
-            <a href="{{ route('mahasiswas.index') }}" class="btn btn-secondary">Kembali</a>
-        </div>
-    </div>
     <div class="row">
         <div class="col-12 text-center">
-            <h3><strong>KARTU HASIL STUDI (KHS)</strong></h3>
+            <h4><strong>KARTU HASIL STUDI (KHS)</strong></h4>
         </div>
         <div class="col-12 my-4">
+            <br><br>
             <p class="m-0"><strong>Nama:</strong> {{ $mahasiswas->Nama }}</p>
             <p class="m-0"><strong>NIM:</strong> {{ $mahasiswas->Nim }}</p>
             <p class="m-0"><strong>Kelas:</strong> {{ $mahasiswas->Kelas->nama_kelas }}</p>
         </div>
         <div class="col-12">
+
+        <br><br><br><br>
+        <br><br>
             <table class="table table-bordered">
                 <tr>
                     <th>Mata Kuliah</th>
@@ -32,11 +31,5 @@
                 @endforeach
             </table>
         </div>
-    </div>
-    {{-- <div class="col-12 text-center" >
-        <a href="{{ ('mahasiswas.mahasiswas_pdf') }}" class="btn btn-secondary">Cetak KHS</a>
-    </div> --}}
-    <div class="col-12 text-center">
-        <a href="{{ route('mahasiswas.cetak_pdf', $mahasiswas->Nim) }}" class="btn btn-danger">Cetak KHS</a>
     </div>
 @endsection

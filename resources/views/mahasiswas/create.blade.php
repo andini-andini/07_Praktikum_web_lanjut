@@ -4,7 +4,7 @@
 
 <div class="container mt-5">
 
-    <div class="row justify-content-center align-items-center">
+    <div class="row justify-content-center align-items-center" >
         <div class="card" style="width: 24rem;">
             <div class="card-header">
             Tambah Mahasiswa
@@ -20,7 +20,7 @@
                     </ul>
                 </div>
             @endif
-            <form method="post" action="{{ route('mahasiswas.store') }}" id="myForm">
+            <form method="post" action="{{ route('mahasiswas.store') }}" id="myForm" enctype="multipart/form-data">
             @csrf
             <div class="form-group">
                 <label for="Nim">Nim</label><br>
@@ -29,6 +29,10 @@
             <div class="form-group">
                 <label for="Nama">Nama</label><br>
                 <input type="Nama" name="Nama" class="form-control" id="Nama" aria-describedby="Nama" >
+            </div>
+            <div class="form-group" >
+                <label for="image">Profil</label><br>
+                <input type="file" class="form-control" required="required" name="image"><br>
             </div>
             <div class="form-group">
                 <label for="Kelas">Kelas</label>

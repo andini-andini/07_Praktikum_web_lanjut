@@ -7,8 +7,7 @@
                     <form action="{{ route('mahasiswas.search') }}" method="GET">
                         <div class="col-lg-6">
                             <div class="input-group">
-                                <input type="text" name="keywords" class="form-control" id="keywords"
-                                    aria-describedby="keywords" placeholder="Masukkan nama mahasiswa">
+                                <input type="text" name="keywords" class="form-control" id="keywords" aria-describedby="keywords" placeholder="Masukkan nama mahasiswa">
                                 <span class="input-group-btn ml-3">
                                     <button class="btn btn-outline-primary" type="submit">Cari</button>
                                 </span>
@@ -17,7 +16,7 @@
                     </form>
                 </div>
                 <div class="col-lg-2 ml-auto">
-                    <a class="btn btn-success" href="{{ route('mahasiswas.create') }}"> Input Mahasiswa</a>
+                    <a class="btn btn-success" href="{{ route('mahasiswas.create') }}">Input Mahasiswa</a>
                 </div>
             </div>
         </div>
@@ -33,6 +32,7 @@
         <tr>
             <th>Nim</th>
             <th>Nama</th>
+            <th>Profil</th>
             <th>Kelas</th>
             <th>Jurusan</th>
             {{-- <th>Tgl_Lahir</th>
@@ -45,6 +45,13 @@
 
             <td>{{ $Mahasiswa->Nim }}</td>
             <td>{{ $Mahasiswa->Nama }}</td>
+            <td>
+                @php
+                    $pathImage = '';
+                    $Mahasiswa->feature_image ? ($pathImage = 'storage/' . $Mahasiswa->feature_image) : ($pathImage = 'img/empty.jpg');
+                @endphp
+                <img src="{{ asset('' . $pathImage . '') }}" width="100" alt="">
+            </td>
             <td>{{ $Mahasiswa->Kelas->nama_kelas }}</td>
             <td>{{ $Mahasiswa->Jurusan }}</td>
             {{-- <td>{{ $Mahasiswa->Tgl_Lahir }}</td>

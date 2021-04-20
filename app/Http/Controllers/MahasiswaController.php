@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Kelas;
 use App\Models\Mahasiswa;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class MahasiswaController extends Controller
 {
@@ -18,8 +19,8 @@ class MahasiswaController extends Controller
         //fungsi eloquent menampilkan data menggunakan pagination
         // $mahasiswas = Mahasiswa::all(); // Mengambil semua isi tabel
         // $posts = Mahasiswa::orderBy('Nim', 'desc')->paginate(6);
-        $mahasiswas = Mahasiswa::with('kelas')->orderBy('Nim', 'desc')->paginate(5);
-        return view('mahasiswas.index', compact('mahasiswas'))->with('i', (request()->input('page', 1) - 1) * 5);
+        $mahasiswas = Mahasiswa::with('kelas')->orderBy('Nim', 'desc')->paginate(3);
+        return view('mahasiswas.index', compact('mahasiswas'))->with('i', (request()->input('page', 1) - 1) * 3);
     }
 
     /**
@@ -52,6 +53,10 @@ class MahasiswaController extends Controller
             'Email' => 'required',
         ]);
 
+        if ($request->file('image')) {
+            $image_name = $request->file('image')->store('images', 'public');
+        }
+
         //fungsi eloquent untuk mengambil data kelas dari relation
         $kelas = Kelas::find($request->get('Kelas'));
 
@@ -59,6 +64,7 @@ class MahasiswaController extends Controller
         $Mahasiswa = new Mahasiswa();
         $Mahasiswa->Nim = $request->get('Nim');
         $Mahasiswa->Nama = $request->get('Nama');
+        $Mahasiswa->feature_image = $image_name;
         $Mahasiswa->Jurusan = $request->get('Jurusan');
         $Mahasiswa->Tgl_Lahir = $request->get('Tgl_Lahir');
         $Mahasiswa->No_Handphone = $request->get('No_Handphone');
@@ -122,15 +128,25 @@ class MahasiswaController extends Controller
             'Email' => 'required',
         ]);
 
+
+        if ($request->file('image')) {
+            $image_name = $request->file('image')->store('images', 'public');
+        }
+
         //fungsi eloquent untuk menyimpan data mahasiswa
         $Mahasiswa = Mahasiswa::with('Kelas')->where('Nim', $Nim)->first();
         $Mahasiswa->Nim = $request->get('Nim');
         $Mahasiswa->Nama = $request->get('Nama');
+        $Mahasiswa->feature_image = $image_name;
         $Mahasiswa->Jurusan = $request->get('Jurusan');
         $Mahasiswa->Tgl_Lahir = $request->get('Tgl_Lahir');
         $Mahasiswa->No_Handphone = $request->get('No_Handphone');
         $Mahasiswa->Email = $request->get('Email');
         $Mahasiswa->save();
+
+        if ($Mahasiswa->feature_image && file_exists(storage_path('app/public/' . $Mahasiswa->feature_image))) {
+            Storage::delete('public/' . $Mahasiswa->feature_image);
+        }
 
         $Kelas = new Kelas;
         $Kelas->id = $request->get('Kelas');
